@@ -1,9 +1,9 @@
-const config = require('../config');
+const config = require('../config').database;
 const { Sequelize } = require('sequelize');
 const initModels = require('./models/index');
 
 module.exports = async function initConnectDB(app) {
-  const sequelize = new Sequelize('boke', 'root', '1095996920', {
+  const sequelize = new Sequelize(config.baseName, config.username, config.password, {
     host: config.host,
     prot: config.prot,
     dialect: config.dialect,
@@ -20,9 +20,8 @@ module.exports = async function initConnectDB(app) {
     initModels(sequelize);
     global.sequelize = sequelize;
     app.context.sequelize = sequelize;
-    // sequelize.sync({ force: false });
     console.log('Connection db successfully.');
   }).catch(e => {
-    console.error('Unable to connect to the database:', e);
+    console.error('Connection db fail:', e);
   })
 }
