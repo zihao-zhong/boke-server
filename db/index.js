@@ -7,7 +7,8 @@ module.exports = async function initConnectDB(app) {
     host: config.host,
     prot: config.prot,
     dialect: config.dialect,
-    logging: true,  // 打印 sql 语句
+    logging: false,  // 打印 sql 语句
+    // logging: console.log,
     pool: {   //连接池设置
       max: 5, //最大连接数
       min: 0, //最小连接数

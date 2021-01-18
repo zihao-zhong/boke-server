@@ -10,11 +10,11 @@ POST {{url}}/user
 content-type: application/json
 
 {
-  "username": "测试2号",
+  "username": "测试4号",
   "password": "123456"
 }
 
 ### 
 
-DELETE {{url}}/user?id=5
+DELETE {{url}}/user?id=6
 content-type: application/json
