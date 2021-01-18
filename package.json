@@ -1,13 +1,16 @@
 {
   "name": "a",
   "version": "0.1.0",
-  "private": true,
+  "main": "server/app.js",
+  "description": "个人博客项目后端项目",
   "scripts": {
     "start": "node bin/www",
     "dev": "./node_modules/.bin/nodemon bin/www",
     "prd": "pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "zihao",
+  "license": "MIT",
   "dependencies": {
     "@koa/router": "^10.0.0",
     "co": "^4.6.0",
