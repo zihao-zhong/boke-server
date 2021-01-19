@@ -10,7 +10,7 @@ POST {{url}}/user
 content-type: application/json
 
 {
-  "username": "测试4号",
+  "username": "测试6号",
   "password": "123456"
 }
 

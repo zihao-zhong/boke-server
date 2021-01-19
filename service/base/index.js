@@ -16,8 +16,7 @@ module.exports = class BaseService {
     delete options.pageNum;
     delete options.pageSize;
 
-    const data = await this.Model.findAll(options);
-    return data;
+    return await this.Model.findAll(options);
   }
 
   /**
@@ -45,8 +44,7 @@ module.exports = class BaseService {
    * @description 获取总数的方法
    */
   async count(where = {}) {
-    const count = await this.Model.count({ where });
-    return count;
+    return await this.Model.count({ where });
   }
 
   /**
@@ -55,8 +53,16 @@ module.exports = class BaseService {
    * @description 获取单个数据的方法
    */
   async getItem(where = {}) {
-    const data = await this.Model.findOne({ where });
-    return data;
+    return await this.Model.findOne({ where });
+  }
+
+  /**
+   * @author zihao
+   * @param {*} where 
+   * @description 获取单个数据的方法
+   */
+  async getItemById(id) {
+    return await this.Model.findByPk(id);
   }
 
   /**
@@ -111,5 +117,15 @@ module.exports = class BaseService {
    */
   async destroy(where) {
     return await this.Model.destroy({ where });
+  }
+
+  /**
+   * @author zihao
+   * @param {*} sql 语句 
+   * @param {*} options 配置 
+   * @description 原生的sql语句查询
+   */
+  async query(sql, options = {}) {
+    return await global.sequelize.query(sql, options);
   }
 };

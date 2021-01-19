@@ -24,6 +24,13 @@ const config = {
       allowNull: false,
       field: 'password',
       comment: '密码',
+      validate: {
+        customValidator(value) {
+          if (value === null) {
+            throw new Error('密码格式错误');
+          }
+        }
+      }
     },
     createdBy: {
       type: DataTypes.STRING(255),

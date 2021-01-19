@@ -1,44 +1,13 @@
 const Router = require('@koa/router');
 const router = new Router();
 router.prefix('/api');
-const BaseService = require('../service/base');
 
-// const UserService = require('../service/user');
-// const Service = new UserService();
+const UserController = require('../controller/user');
+const userController = new UserController();
 
-router.get('/user', async (ctx) => {
-  try {
-    const { User } = ctx.sequelize.models;
-    const service = new BaseService(User);
-    const data = await service.list();
-    ctx.success(data);
-  } catch (e) {
-    ctx.error(e);
-  }
-});
-
-router.post('/user', async (ctx) => {
-  try {
-    const data = ctx.request.body;
-    const { User } = ctx.sequelize.models;
-    const service = new BaseService(User);
-    const res = await service.createItem(data);
-    ctx.success(res);
-  } catch (err) {
-    ctx.error(err);
-  };
-});
-
-router.delete('/user', async (ctx) => {
-  try {
-    const { id } = ctx.query;
-    const { User } = ctx.sequelize.models;
-    const service = new BaseService(User);
-    await service.deleteItem(id, '用户不存在');
-    ctx.success('删除成功');
-  } catch (err) {
-    ctx.error(err);
-  };
-});
+router.get('/user', userController.getUserList);
+router.get('/user/:id', userController.getUserInfo);
+router.post('/user', userController.createUser);
+router.delete('/user', userController.deleteUser);
 
 module.exports = router;
