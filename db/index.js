@@ -2,8 +2,11 @@ const config = require('../config').database;
 const { Sequelize } = require('sequelize');
 const initModels = require('./models/index');
 
-module.exports = async function initConnectDB(app) {
-  const sequelize = new Sequelize(config.baseName, config.username, config.password, {
+// 全局的单一实例
+let sequelize = null;
+
+function connectDB() {
+  return new Sequelize(config.baseName, config.username, config.password, {
     host: config.host,
     prot: config.prot,
     dialect: config.dialect,
@@ -15,14 +18,21 @@ module.exports = async function initConnectDB(app) {
       idle: 10000
     },
   });
+}
 
-  sequelize.authenticate().then(() => {
-    // 注册模型
-    initModels(sequelize);
-    global.sequelize = sequelize;
-    app.context.sequelize = sequelize;
-    console.log('Connection db successfully.');
-  }).catch(e => {
-    console.error('Connection db fail:', e);
-  })
+module.exports = async function initConnectDB(app) {
+  if (!sequelize) {
+    sequelize = connectDB();
+    return sequelize.authenticate().then(() => {
+      // 注册模型
+      initModels(sequelize);
+      global.sequelize = sequelize;
+      app.context.sequelize = sequelize;
+      console.log('Connection db success');
+      return sequelize;
+    }).catch(e => {
+      console.error('Connection db fail:', e);
+    })
+  }
+  return sequelize;
 }

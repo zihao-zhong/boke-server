@@ -1,13 +1,15 @@
-const Router = require('@koa/router');
-const router = new Router();
-router.prefix('/api');
+module.exports = async function(app) {
+  const Router = require('@koa/router');
+  const router = new Router();
+  router.prefix('/api');
+  const instance = require('../utils/instance');
+  const UserController = require('../controller/user');
+  const userController = instance(UserController, app);
 
-const UserController = require('../controller/user');
-const userController = new UserController();
+  router.get('/user', userController.getUserList);
+  router.get('/user/:id', userController.getUserInfo);
+  router.post('/user', userController.createUser);
+  router.delete('/user', userController.deleteUser);
 
-router.get('/user', userController.getUserList);
-router.get('/user/:id', userController.getUserInfo);
-router.post('/user', userController.createUser);
-router.delete('/user', userController.deleteUser);
-
-module.exports = router;
+  return router;
+}

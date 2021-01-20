@@ -1,17 +1,14 @@
 const UserService = require('../../service/user');
-
 module.exports = class UserController {
-  constructor() {
-    // const { User } = global.sequelize.models;
-    // this.userService = new UserService(User);
+  constructor(app) {
+    const { User } = app.context.sequelize.models;
+    this.userService = new UserService(User);
   }
 
   // 获取用户信息列表接口
   async getUserList(ctx) {
     try {
-      const { User } = ctx.sequelize.models;
-      const userService = new UserService(User);
-      const data = await userService.list();
+      const data = await this.userService.list();
       ctx.success(data);
     } catch (e) {
       ctx.error(e);
@@ -22,9 +19,7 @@ module.exports = class UserController {
   async getUserInfo(ctx) {
     try {
       const { id } = ctx.params;
-      const { User } = ctx.sequelize.models;
-      const userService = new UserService(User);
-      const data = await userService.getItemById(id);
+      const data = await this.userService.getItemById(id);
       ctx.success(data);
     } catch (e) {
       ctx.error(e);
@@ -35,9 +30,7 @@ module.exports = class UserController {
   async createUser(ctx) {
     try {
       const data = ctx.request.body;
-      const { User } = ctx.sequelize.models;
-      const userService = new UserService(User);
-      const res = await userService.createItem(data);
+      const res = await this.userService.createItem(data);
       ctx.success(res);
     } catch (err) {
       ctx.error(err);
@@ -48,9 +41,7 @@ module.exports = class UserController {
   async deleteUser(ctx) {
     try {
       const { id } = ctx.query;
-      const { User } = ctx.sequelize.models;
-      const userService = new BaseService(User);
-      await userService.deleteItem(id, '用户不存在');
+      await this.userService.deleteItem(id, '用户不存在');
       ctx.success('删除成功');
     } catch (err) {
       ctx.error(err);
