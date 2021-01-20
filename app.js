@@ -17,13 +17,13 @@ async function start() {
   commonMethod(app);
   initMiddleware(app);
   await initConnectDB(app);
-  const router = await initRouter(app);
+  const router = initRouter(app);
   
   app.use(json());
   app.use(koaBody());
   app.use(koaLogger());
   app.use(bodyParser());
-  app.use(router.routes())
+  app.use(router.routes());
   app.use(router.allowedMethods());
   
   app.on('error', (err, ctx) => {

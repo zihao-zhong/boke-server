@@ -18,7 +18,7 @@ module.exports = class UserController {
   // 获取用户信息接口
   async getUserInfo(ctx) {
     try {
-      const { id } = ctx.params;
+      const { id } = ctx.query;
       const data = await this.userService.getItemById(id);
       ctx.success(data);
     } catch (e) {

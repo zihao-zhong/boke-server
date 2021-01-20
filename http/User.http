@@ -1,20 +1,25 @@
-@url = http://localhost:5000/api
+@url = http://localhost:5000/api/user
 
 ###
 
-GET {{url}}/user
+GET {{url}}/list
 
 ### 
 
-POST {{url}}/user 
+GET {{url}}?id=8
+content-type: application/json
+
+### 
+
+POST {{url}}/register 
 content-type: application/json
 
 {
-  "username": "测试6号",
+  "username": "测试7号",
   "password": "123456"
 }
 
 ### 
 
-DELETE {{url}}/user?id=6
+DELETE {{url}}?id=7
 content-type: application/json
