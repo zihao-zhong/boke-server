@@ -27,12 +27,12 @@ async function start() {
   app.use(router.allowedMethods());
   
   app.on('error', (err, ctx) => {
-    console.error('server error', err, ctx);
+    console.error('Server', err, ctx);
   });
   
   app.listen(5000, () => {
     console.log('http://localhost:5000');
-  })
+  });
 }
 
 (async () => {

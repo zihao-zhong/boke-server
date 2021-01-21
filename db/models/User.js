@@ -1,4 +1,5 @@
 const moment = require('moment');
+const bcrypt = require('bcryptjs');
 const { DataTypes, Model } = require('sequelize');
 
 const config = {
@@ -24,12 +25,9 @@ const config = {
       allowNull: false,
       field: 'password',
       comment: '密码',
-      validate: {
-        customValidator(value) {
-          if (value === null) {
-            throw new Error('密码格式错误');
-          }
-        }
+      set(val) {
+        const salt = bcrypt.genSaltSync(10);
+        this.setDataValue('password', bcrypt.hashSync(val, salt));
       }
     },
     createdBy: {

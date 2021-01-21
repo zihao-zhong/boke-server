@@ -103,9 +103,9 @@ module.exports = class BaseService {
    * @param {*} data 
    * @description 删除单个数据的方法
    */
-  async deleteItem(id, errMsg) {
+  async deleteItem(id, errMsg = '数据不存在') {
     const item = await this.getItem({ id });
-    if (!item) throw new Error(errMsg || '数据不存在');
+    if (!item) throw new Error(errMsg);
 
     await item.destroy();
   }

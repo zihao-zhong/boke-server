@@ -4,8 +4,9 @@ module.exports = function(app, router, instance) {
 
   router.get('/list', userController.getUserList);
   router.get('/', userController.getUserInfo);
-  router.post('/register', userController.createUser);
   router.delete('/', userController.deleteUser);
+  router.post('/login', userController.handleLogin)
+  router.post('/register', userController.createUser);
 
   return router;
 }

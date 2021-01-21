@@ -1,14 +1,20 @@
 module.exports = function init(app) {
-  // app.use(async function (next) {
-  //   var now = parseInt(Date.now() / 1000);
-  //   app.context.now = now;
-  //   await next;
-  // });
+  // 全局的错误监听
+  app.use(async function(ctx, next) {
+    try {
+      await next();
+    } catch (e) {
+      ctx.error(e);
+      console.log(`Error: ${e.message}`);
+      // ctx.app.emit('error', e, ctx);
+    };
+  });
 
-  // app.use(async function (next){
-  //   const start = new Date;
-  //   await next;
-  //   const ms = new Date - start;
-  //   console.log(this.method, this.url, ms);
+  // 存储一个接口调取时的时间戳
+  // app.use(async function(ctx, next) {
+  //   try {
+  //     ctx.dateNow = Date.now();
+  //     await next();
+  //   } catch (e) {};
   // });
 }
