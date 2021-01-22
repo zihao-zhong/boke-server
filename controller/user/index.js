@@ -30,11 +30,26 @@ module.exports = class UserController {
     ctx.success(user);
   }
 
+  // 用户退出接口
+  async handleLogOut(ctx) {
+    const { id } = ctx.query;
+    const user = this.userService.getItemById(id);
+    if (!user) throw new Error('用户不存在');
+    this.success('退出成功');
+  }
+
   // 新增用户，注册接口
   async createUser(ctx) {
     const data = ctx.request.body;
     const res = await this.userService.createItem(data);
     ctx.success(res);
+  }
+
+  // 修改用户信息，修改权限接口
+  async editUserInfo(ctx) {
+    const { body } = ctx.request;
+    const ret = await this.userService.updateItem(body, { id: body.id });
+    ctx.success(ret);
   }
 
   // 删除用户接口，注销

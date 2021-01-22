@@ -28,6 +28,17 @@ content-type: application/json
   "password": "123456"
 }
 
+### 修改用户信息
+
+POST {{url}}/edit-user
+content-type: application/json
+
+{
+  "id": "8",
+  "username": "admin"
+}
+
+
 ### 删除用户
 
 DELETE {{url}}?id=7

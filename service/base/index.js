@@ -81,21 +81,26 @@ module.exports = class BaseService {
 
   /**
    * @author zihao
-   * @param {*} data 
-   * @param {*} where 是否内部去查询数据是否存在 
+   * @param {*} data 要修改的数据
+   * @param {*} where 是否内部去查询数据是否存在，如果不需要请传 false
+   * @param {*} whereTwo 如果调用 Model 的 update 方法，需要传如的条件 
    * @description 修改单个数据的方法
    */
-  async updateItem(data, where = false) {
+  async updateItem(data, where = false, whereTwo = {}) {
     if (where) {
       const item = await this.getItem(where);
       if (!item) throw new Error('数据不存在');
+      const ret = await item.update({
+        ...data,
+        updatedAt: new Date(),
+      });
+      return ret;
+    } else {
+      return await this.Model.update({
+        ...data,
+        updatedAt: new Date(),
+      }, whereTwo);
     }
-
-    const ret = await item.update({
-      ...data,
-      updatedAt: new Date(),
-    });
-    return ret;
   }
 
   /**
