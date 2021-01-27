@@ -6,3 +6,10 @@
 ```
 nodemon app.js
 ```
+
+### 启动 redis
+
+```
+cd /usr/local/redis // redis 的安装目录
+redis-server
+```

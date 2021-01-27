@@ -7,6 +7,7 @@ const onerror = require('koa-onerror');
 const koaLogger = require('koa-logger');
 const bodyParser = require('koa-bodyparser');
 
+const initRedis = require('./redis/index');
 const initConnectDB = require('./db/index');
 const initRouter = require('./routes/index');
 const initMiddleware = require('./middleware');
@@ -16,6 +17,7 @@ async function start() {
   onerror(app);
   commonMethod(app);
   initMiddleware(app);
+  await initRedis(app);
   await initConnectDB(app);
   const router = initRouter(app);
   
